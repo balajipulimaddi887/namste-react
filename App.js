@@ -1,31 +1,42 @@
-const heading = React.createElement("h1",
- {id: "heading",
-  abc : "abc",
- class: "heading"}, "Hello world from React!");
+import React from "react"
+import ReactDOM from "react-dom/client";
 
 
- /***
-  * 
-  * <div id ="parent">
-  *     <div id="child1">
-  *         <h1> I am h1 tag </h1>
-  *         <h2> I am h2 tag </h2>
-  *     </div>
-  *     <div id="child1">
-  *         <h1> I am h1 tag </h1>
-  *         <h2> I am h2 tag </h2>
-  *     </div>
-  * </div>
-  */
 
- const parent = React.createElement("div", {id : "parent"}, 
-            [React.createElement("div", {id : "child1"}, 
-            [React.createElement("h1", {}, "I am h1") , React.createElement("h1", {}, "I am h2")]), 
-            React.createElement("div", {id : "child2"}, 
-            [React.createElement("h1", {}, "I am h1") , React.createElement("h1", {}, "I am h2")])])
 
-console.log(parent) // not <h1> tag, it is react element(js object)
+const Heading = () => React.createElement("h1", {id:"heading"}, "Hello from create element");
+
+const JsxHeading = () => (<h1 id="heading" className="heading" tabIndex="1">Hello from jsx</h1>)
+
+const JsxParagraph = () => {
+    return <div id="paragraph">
+        <Heading />
+        <p className="paragraph">I am paragraph</p>
+    </div>
+}
+
+const one = 1;
+
+const HeadingComponent = () => (
+    <>
+    <>
+        <h1>Hii</h1>
+    </>
+    <div id="container">
+        {Heading()}
+        <Heading />
+        <Heading>Hii</Heading>
+        <h1 id="heading">from functional component</h1>
+    </div>
+    <div id="container2"></div>
+    </>
+)
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(parent);
+const root1 = ReactDOM.createRoot(document.getElementById("root1"));
+
+root1.render(<HeadingComponent />)
+
+
+root.render(<HeadingComponent />);
