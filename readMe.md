@@ -16,3 +16,21 @@ Minification
 Compress 
 consistent hashing
 different build for dev and production
+
+# Food ordering app
+
+/**
+ * - Header 
+ *  - logo
+ *  - nav -items 
+ * - Body
+ *  - search
+ *  - restro container 
+ *    - restro card
+ *      - image 
+ *      - restro name  
+ *      - cusine  
+ *      - star
+ *  - Footer
+ *      - copy right   
+ */
