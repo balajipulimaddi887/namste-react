@@ -1,4 +1,4 @@
-import React from "react"
+import React, {lazy, Suspense} from "react"
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -8,6 +8,11 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Contact from "./components/Contact";
 import RestaurantDetails from "./components/RestaurantDetails";
 import Profile from "./components/Profile";
+import Shimmer from "./components/Shimmer";
+
+// doesn't load at first time, because while loading js,react tries to suspend it.
+// lazy loading, chunking, code splitting, on demand loading, dynamic bundling, dynamic import
+const Instamart = lazy(() => import("./components/Instamart"));
 
 const AppLayout = () => {
     return (
@@ -39,6 +44,11 @@ const appRouter = createBrowserRouter([{
     }, {
         path: "/restaurant/:id",
         element: <RestaurantDetails />
+    }, {
+        path: "/instamart",
+        element: <Suspense fallback={<Shimmer />}>
+            <Instamart />
+            </Suspense>
     }]
 }])
 
