@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from "react"
+import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -9,50 +9,79 @@ import Contact from "./components/Contact";
 import RestaurantDetails from "./components/RestaurantDetails";
 import Profile from "./components/Profile";
 import Shimmer from "./components/Shimmer";
+import Footer from "./components/Footer";
+import UserDetails from "./utils/UserDetails";
+import FooterDetails from "./utils/FooterDetails";
 
 // doesn't load at first time, because while loading js,react tries to suspend it.
 // lazy loading, chunking, code splitting, on demand loading, dynamic bundling, dynamic import
 const Instamart = lazy(() => import("./components/Instamart"));
 
 const AppLayout = () => {
-    return (
-        <div className="app">
-            <Header />
-            <Outlet />
-        </div>
-    )
-}
+  const [user, setUser] = useState({
+    name: "balu",
+    email: "balu@gmail.com",
+  });
+  const [social, setSocial] = useState({
+    facebook: "facebook.com",
+    twitter: "twitter.com",
+  });
+  return (
+    <UserDetails.Provider value={{ user: user, setUser: setUser }}>
+      <Header />
+      <FooterDetails.Provider
+        value={{
+          footer: social,
+          setFooter: setSocial,
+        }}
+      >
+        <Outlet />
+        <Footer />
+      </FooterDetails.Provider>
+    </UserDetails.Provider>
+  );
+};
 
-const appRouter = createBrowserRouter([{
+const appRouter = createBrowserRouter([
+  {
     path: "/",
     element: <AppLayout />,
     errorElement: <Error />,
-    children: [{
+    children: [
+      {
         path: "/about",
         element: <About />,
-        children: [{
-            path:"profile",
-            element: <Profile />
-        } 
-        ]
-    }, {
+        children: [
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+        ],
+      },
+      {
         path: "/contact",
-        element: <Contact />
-    }, {
+        element: <Contact />,
+      },
+      {
         path: "/",
-        element: <Body />
-    }, {
+        element: <Body />,
+      },
+      {
         path: "/restaurant/:id",
-        element: <RestaurantDetails />
-    }, {
+        element: <RestaurantDetails />,
+      },
+      {
         path: "/instamart",
-        element: <Suspense fallback={<Shimmer />}>
+        element: (
+          <Suspense fallback={<Shimmer />}>
             <Instamart />
-            </Suspense>
-    }]
-}])
-
+          </Suspense>
+        ),
+      },
+    ],
+  },
+]);
 
 const root1 = ReactDOM.createRoot(document.getElementById("root1"));
 
-root1.render(<RouterProvider router={appRouter} />)
+root1.render(<RouterProvider router={appRouter} />);

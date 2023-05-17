@@ -1,6 +1,9 @@
+import UserDetails from "../utils/UserDetails";
 import { RESTAURANT_CDN_LINK } from "../utils/constants";
+import { useContext } from "react";
 
 const RestaurantCard = (props) => {
+  const { user } = useContext(UserDetails);
   const { resData } = props;
   const { name, cuisines, avgRating, deliveryTime, cloudinaryImageId } =
     resData?.data;
@@ -11,6 +14,9 @@ const RestaurantCard = (props) => {
       <h4>{cuisines.join(", ")}</h4>
       <h4>{avgRating} stars</h4>
       <h4>{deliveryTime} minutes</h4>
+      <h4>
+        {user.name} - {user.email}{" "}
+      </h4>
     </div>
   );
 };
