@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import UserDetails from "../utils/UserDetails";
 import Profile from "./Profile";
 import React from "react";
 
@@ -9,14 +9,21 @@ class About extends React.Component {
   }
 
   componentDidMount() {
-    console.log("parent componentDidMount");
+    // console.log("parent componentDidMount");
   }
   render() {
-    console.log("parent render");
+    // console.log("parent render");
     return (
       <div>
         <h1>About us</h1>
         <p>This is react project</p>
+        <UserDetails.Consumer>
+          {({ user }) => (
+            <p>
+              This project is made by {user?.name}, {user?.email}{" "}
+            </p>
+          )}
+        </UserDetails.Consumer>
         {Array(10)
           .fill(" ")
           .map((e, i) => (
@@ -27,11 +34,11 @@ class About extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log("component Did update");
+    // console.log("component Did update");
   }
 
   componentWillUnmount() {
-    console.log("component will un mount");
+    // console.log("component will un mount");
   }
 }
 

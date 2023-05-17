@@ -1,11 +1,15 @@
 import RestaurantCard from "./RestaurantCard";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Shimmer from "./Shimmer";
 import useOnline from "../utils/useOnline";
 import { Link } from "react-router-dom";
 import useListOfRestaurant from "../utils/useListOfRestaurant";
+import UserDetails from "../utils/UserDetails";
+import FooterDetails from "../utils/FooterDetails";
 
 const Body = () => {
+  const { user, setUser } = useContext(UserDetails);
+  const { footer, setFooter } = useContext(FooterDetails);
   const [searchTxt, setSearchTxt] = useState("");
 
   const [allRes, filterRes, setFilterRes] = useListOfRestaurant();
@@ -42,6 +46,24 @@ const Body = () => {
         >
           Search
         </button>
+        <input
+          type="text"
+          className="border border-black p-1"
+          value={user.name}
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
+        />
+        <input
+          type="text"
+          className="border border-black p-1"
+          value={user.email}
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+        />
+        <input
+          type="text"
+          className="border border-black p-1"
+          value={footer.facebook}
+          onChange={(e) => setFooter({ ...footer, facebook: e.target.value })}
+        />
       </div>
       {allRes?.length === 0 ? (
         <Shimmer />

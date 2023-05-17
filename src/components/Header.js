@@ -1,9 +1,16 @@
 import Logo from "../assets/foodLogo.jpg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import UserDetails from "../utils/UserDetails";
+import FooterDetails from "../utils/FooterDetails";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
+
+  const { footer } = useContext(FooterDetails);
+  console.log(footer);
+
+  const { user } = useContext(UserDetails);
 
   return (
     <div className="flex justify-between items-center border border-black m-4">
@@ -26,6 +33,7 @@ const Header = () => {
             <Link to="/instamart">Instamart</Link>
           </li>
         </ul>
+        <h1 className="font-bold border border-1px p-1">{user.name}</h1>
         {isLogin ? (
           <button
             className="mx-4 bg-red-700 text-green-400 p-4 rounded-xl"
