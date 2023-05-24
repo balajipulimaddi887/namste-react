@@ -9,9 +9,12 @@ import Contact from "./components/Contact";
 import RestaurantDetails from "./components/RestaurantDetails";
 import Profile from "./components/Profile";
 import Shimmer from "./components/Shimmer";
+import Cart from "./components/Cart";
 import Footer from "./components/Footer";
 import UserDetails from "./utils/UserDetails";
 import FooterDetails from "./utils/FooterDetails";
+import { Provider } from "react-redux";
+import store from "./utils/store";
 
 // doesn't load at first time, because while loading js,react tries to suspend it.
 // lazy loading, chunking, code splitting, on demand loading, dynamic bundling, dynamic import
@@ -27,18 +30,20 @@ const AppLayout = () => {
     twitter: "twitter.com",
   });
   return (
-    <UserDetails.Provider value={{ user: user, setUser: setUser }}>
-      <Header />
-      <FooterDetails.Provider
-        value={{
-          footer: social,
-          setFooter: setSocial,
-        }}
-      >
-        <Outlet />
-        <Footer />
-      </FooterDetails.Provider>
-    </UserDetails.Provider>
+    <Provider store={store}>
+      <UserDetails.Provider value={{ user: user, setUser: setUser }}>
+        <Header />
+        <FooterDetails.Provider
+          value={{
+            footer: social,
+            setFooter: setSocial,
+          }}
+        >
+          <Outlet />
+          <Footer />
+        </FooterDetails.Provider>
+      </UserDetails.Provider>
+    </Provider>
   );
 };
 
@@ -69,6 +74,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurant/:id",
         element: <RestaurantDetails />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "/instamart",
