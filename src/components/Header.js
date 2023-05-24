@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import UserDetails from "../utils/UserDetails";
 import FooterDetails from "../utils/FooterDetails";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -11,6 +12,8 @@ const Header = () => {
   console.log(footer);
 
   const { user } = useContext(UserDetails);
+
+  const count = useSelector((store) => store.cart.count);
 
   return (
     <div className="flex justify-between items-center border border-black m-4">
@@ -28,9 +31,11 @@ const Header = () => {
           <li className="mx-2 hover:text-green-400">
             <Link to="/contact">Contact</Link>
           </li>
-          <li className="mx-2 hover:text-green-400">Cart</li>
           <li className="mx-2 hover:text-green-400">
             <Link to="/instamart">Instamart</Link>
+          </li>
+          <li className="mx-2 hover:text-green-400">
+            <Link to="/cart">Cart - {count} items</Link>
           </li>
         </ul>
         <h1 className="font-bold border border-1px p-1">{user.name}</h1>
